@@ -1,11 +1,12 @@
 {
   "name": "actifai-engineering-takehome-app",
   "version": "1.0.0",
-  "description": "Node server for the Actifai Engineering takehome test.",
+  "description": "Node server for the Actifai Engineering takehome test (Bela).",
   "author": "Actifai Engineering",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "npx jest analytics.test.js"
   },
   "dependencies": {
     "express": "4.16.1",
