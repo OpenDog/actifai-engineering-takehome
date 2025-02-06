@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Call Center Analytics API
+  description: API for retrieving sales analytics grouped by time periods.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /analytics:
+    get:
+      summary: Retrieves sales analytics data
+      description: |
+        Fetches aggregated sales data grouped by a specified time period (Year, Month, or Day).
+        Returns total sales, revenue, and average revenue per user and group.
+      parameters:
+        - name: period
+          in: query
+          description: Time granularity for aggregation ('Y' for year, 'M' for month, 'D' for day)
+          schema:
+            type: string
+            enum: [Y, M, D]
+            default: M
+        - name: start_date
+          in: query
+          required: true
+          description: Start date for filtering sales (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          description: End date for filtering sales (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+        - name: user_id
+          in: query
+          description: Filter by user ID.
+          schema:
+            type: integer
+        - name: group_id
+          in: query
+          description: Filter by group ID.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successfully retrieved sales analytics.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    period:
+                      type: integer
+                      description: Aggregated period (YYYY, YYYYMM, or YYYYMMDD).
+                    user_id:
+                      type: integer
+                      description: User ID.
+                    user_name:
+                      type: string
+                      description: User name.
+                    group_id:
+                      type: integer
+                      nullable: true
+                      description: Group ID (null if not assigned).
+                    group_name:
+                      type: string
+                      nullable: true
+                      description: Group name (null if not assigned).
+                    total_sales:
+                      type: integer
+                      description: Total number of sales.
+                    total_revenue:
+                      type: number
+                      format: float
+                      description: Total revenue from sales.
+                    avg_revenue:
+                      type: number
+                      format: float
+                      description: Average revenue per sale.
+        "400":
+          description: Bad request - missing required parameters or invalid input.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "start_date and end_date are required parameters"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"

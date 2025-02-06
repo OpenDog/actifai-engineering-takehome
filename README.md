@@ -37,7 +37,6 @@ define your endpoints.
 4. You now have a database and server running on your machine. You can test it by navigating to `http://localhost:3000/health` in
 your browser. You should see a "Hello World" message.
 
-
 ## Help
 
 If you have any questions, feel free to reach out to your interview scheduler for clarification!
