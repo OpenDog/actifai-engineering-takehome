@@ -16,7 +16,7 @@ async function start() {
 
   // Health check
   app.get('/health', (req, res) => {
-    res.send('Hello World');
+    res.send('Hello Homework');
   });
 
   // Write your endpoints here
